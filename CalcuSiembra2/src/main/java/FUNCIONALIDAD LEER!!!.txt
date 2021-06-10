@@ -1,0 +1,184 @@
+Este bloc tiene como fin ayudar a corregir y guiar en los testeos de la api. Todos los metodos son los implementados en el ServletControlador llamado "CalculadorController".
+Tiene los link y una explicacion breve para llevar al postman.
+
+*******************************************************************
+Metodo getAllVegetales:
+
+http://localhost:8887/getAllVegetales => Este es usado para traer todos los vegetales de la bd. SALIDA:
+
+[
+    {
+        "id": 1,
+        "especie": "Acelga",
+        "distanciaPlantasCM": 20,
+        "fechaPlantacion": "FEBRERO, MARZO, ABRIL, MAYO, JUNIO, AGOSTO, SETIEMBRE, OCTUBRE, NOVIEMBRE DICIEMBRE",
+        "diasCosecha": 80
+    },
+(salteo los demás)
+ {
+        "id": 10,
+        "especie": "Remolacha",
+        "distanciaPlantasCM": 10,
+        "fechaPlantacion": "MARZO, ABRIL, MAYO, JUNIO, AGOSTO, SETIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE",
+        "diasCosecha": 130
+    }
+]
+*******************************************************************
+http://localhost:8887/vegetalId/5 => metodo que trae vegetal por id. SALIDA:
+
+{
+    "id": 5,
+    "especie": "Espinacas",
+    "distanciaPlantasCM": 10,
+    "fechaPlantacion": "FEBRERO, MARZO, ABRIL, MAYO, JUNIO",
+    "diasCosecha": 90
+}
+
+Si ponemos algo mal(un id que no esta en la lista):
+http://localhost:8887/vegetalId/53 => SALIDA:
+
+{
+    "timestamp": "2021-06-10T02:56:20.007+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "path": "/vegetalId/53"
+}
+*******************************************************************
+Metodo getVegetal:
+
+http://localhost:8887/vegetal/Ajo => metodo que trae vegetal por especie. SALIDA:
+{
+    "id": 2,
+    "especie": "Ajo",
+    "distanciaPlantasCM": 15,
+    "fechaPlantacion": "MARZO, ABRIL, MAYO",
+    "diasCosecha": 270
+}
+
+Si ponemos una letra que no hay:
+http://localhost:8887/vegetal/Papitas => SALIDA:
+
+{
+    "timestamp": "2021-06-10T02:58:36.051+00:00",
+    "status": 500,
+    "error": "Internal Server Error",
+    "path": "/vegetal/Papitas"
+}
+
+*********************************************************************
+Metodo getCantidad:
+
+localhost:8887/cantidad_plantas/especie=Ajo&ancho=3&largo=5 => Este metodo devuelve en su body la cantidad de plantas que se pueden plantar en la superficie segun su especie. Devuelve solo el int, ya que el fin de este metodo es integrarlo al final. SALIDA:
+
+{
+    "headers": {},
+    "body": 11538,
+    "statusCode": "OK",
+    "statusCodeValue": 200
+}
+
+Si forzamos el error: 
+
+localhost:8887/cantidad_plantas/especie=Aasdjo&ancho=3&largo=5 => Poniendo cualquier letra en especie. SALIDA:
+{
+    "headers": {},
+    "body": "Valores ingresados no son válidos.",
+    "statusCode": "BAD_REQUEST",
+    "statusCodeValue": 400
+}
+localhost:8887/cantidad_plantas/especie=Ajo&ancho=-3&largo=5 => Poniendo ancho y/o largo negativo. SALIDA:
+{
+    "headers": {},
+    "body": "Se pudo matchear con la bd pero los valores ancho y largo que ingresa deben ser mayor que 0.",
+    "statusCode": "OK",
+    "statusCodeValue": 200
+}
+*********************************************************************
+Metodo getFechaSiembra:
+Este metodo devuelve segun la especie y la fecha actual si es posible plantarla en este momento y en caso positivo, cuando seria la fecha de cosecha en formato dd-MM-yyyy.
+
+localhost:8887/fecha_siembra/Espinacas => Devuelve positivo. SALIDA:
+
+{
+    "headers": {},
+    "body": "Puedes plantar. Tendras fecha estimada de cosecha para el 08-09-2021",
+    "statusCode": "OK",
+    "statusCodeValue": 200
+}
+
+localhost:8887/fecha_siembra/Esparragos => Devuelve fecha fuera de calendario. SALIDA:
+{
+    "headers": {},
+    "body": "La especie consultada está fuera de calendario",
+    "statusCode": "OK",
+    "statusCodeValue": 200
+}
+
+localhost:8887/fecha_siembra/Espinacasasd => Si ponemos especie invalida arroja un internal error. SALIDA:
+{
+    "headers": {},
+    "body": "Especie ingresada no es válida.",
+    "statusCode": "BAD_REQUEST",
+    "statusCodeValue": 400
+}
+*********************************************************************
+Metodo getFuncionalidad:
+
+Este método imprime el objeto vegetal buscado por especie, la cantidad de plantas que se pueden plantar ingresando los parametros de ancho y largo y si es posible plantarlo segun la fecha de hoy, y devuelve la fecha de cosecha.
+
+http://localhost:8887/siembraAPI/especie=Ajo&ancho=1&largo=2 => Ingresamos datos válidos, pero la fecha esta fuera de calendario. SALIDA:
+
+{
+    "headers": {},
+    "body": {
+        "vegetal": {
+            "id": 2,
+            "especie": "Ajo",
+            "distanciaPlantasCM": 15,
+            "fechaPlantacion": "MARZO, ABRIL, MAYO",
+            "diasCosecha": 270
+        },
+        "cantPlantas": 1538,
+        "fechaSiembra": "La especie consultada está fuera de calendario"
+    },
+    "statusCode": "OK",
+    "statusCodeValue": 200
+}
+
+
+http://localhost:8887/siembraAPI/especie=Espinacas&ancho=1&largo=2 => Idem, pero este da fecha de plantacion. SALIDA:
+
+ {
+    "headers": {},
+    "body": {
+        "vegetal": {
+            "id": 5,
+            "especie": "Espinacas",
+            "distanciaPlantasCM": 10,
+            "fechaPlantacion": "FEBRERO, MARZO, ABRIL, MAYO, JUNIO",
+            "diasCosecha": 90
+        },
+        "cantPlantas": 2500,
+        "fechaSiembra": "Puedes plantar. Tendras fecha estimada de cosecha para el 07-09-2021"
+    },
+    "statusCode": "OK",
+    "statusCodeValue": 200
+}
+
+http://localhost:8887/siembraAPI/especie=Espinacas&ancho=1&largo=-2 => Este da error, ya que largo es negativo SALIDA:
+
+{
+    "headers": {},
+    "body": "Se pudo matchear con la bd pero los valores ancho y largo que ingresa deben ser mayor que 0.",
+    "statusCode": "OK",
+    "statusCodeValue": 200
+}
+
+localhost:8887/siembraAPI/especie=Ajasdasddaso&ancho=3&largo=5 => Si ponemos cualquier letra en especie forzando error. SALIDA:
+
+{
+    "headers": {},
+    "body": "Especie ingresada no es válida.",
+    "statusCode": "BAD_REQUEST",
+    "statusCodeValue": 400
+}

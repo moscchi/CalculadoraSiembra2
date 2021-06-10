@@ -1,0 +1,24 @@
+Moschini Sebastián - TP 8 NeoLab
+(Calculador para calendario de siembra)
+
+Script para tabla cosecha:
+
+CREATE TABLE `especie` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `especie` varchar(255) DEFAULT NULL,
+  `distancia_plantas` int DEFAULT NULL,
+  `fecha_plantacion` varchar(300) DEFAULT NULL,
+  `dias_a_cosecha` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+INSERT INTO `siembra`.`especie` (`id`, `especie`, `distancia_plantas`, `fecha_plantacion`, `dias_a_cosecha`) VALUES ('1', 'Acelga', '20', 'FEBRERO, MARZO, ABRIL, MAYO, JUNIO, AGOSTO, SETIEMBRE, OCTUBRE, NOVIEMBRE DICIEMBRE', '80');
+INSERT INTO `siembra`.`especie` (`id`, `especie`, `distancia_plantas`, `fecha_plantacion`, `dias_a_cosecha`) VALUES ('2', 'Ajo', '15', 'MARZO, ABRIL, MAYO', '270');
+INSERT INTO `siembra`.`especie` (`id`, `especie`, `distancia_plantas`, `fecha_plantacion`, `dias_a_cosecha`) VALUES ('3', 'Apio', '25', 'ENERO, FEBRERO, MARZO, SETIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE', '150');
+INSERT INTO `siembra`.`especie` (`id`, `especie`, `distancia_plantas`, `fecha_plantacion`, `dias_a_cosecha`) VALUES ('4', 'Esparragos', '30', 'AGOSTO, SETIEMBRE', '1825');
+INSERT INTO `siembra`.`especie` (`id`, `especie`, `distancia_plantas`, `fecha_plantacion`, `dias_a_cosecha`) VALUES ('5', 'Espinacas', '10', 'FEBRERO, MARZO, ABRIL, MAYO, JUNIO', '90');
+INSERT INTO `siembra`.`especie` (`id`, `especie`, `distancia_plantas`, `fecha_plantacion`, `dias_a_cosecha`) VALUES ('6', 'Lechuga', '20', 'AGOSTO, SETIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE', '90');
+INSERT INTO `siembra`.`especie` (`id`, `especie`, `distancia_plantas`, `fecha_plantacion`, `dias_a_cosecha`) VALUES ('7', 'Papa', '30', 'ENERO, FEBRERO, AGOSTO, SETIEMBRE', '150');
+INSERT INTO `siembra`.`especie` (`id`, `especie`, `distancia_plantas`, `fecha_plantacion`, `dias_a_cosecha`) VALUES ('8', 'Pimiento', '45', 'SETIEMBRE', '200');
+INSERT INTO `siembra`.`especie` (`id`, `especie`, `distancia_plantas`, `fecha_plantacion`, `dias_a_cosecha`) VALUES ('9', 'Rabanito', '5', 'FEBRERO, MARZO, MAYO, ABRIL, JUNIO, SETIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE', '40');
+INSERT INTO `siembra`.`especie` (`id`, `especie`, `distancia_plantas`, `fecha_plantacion`, `dias_a_cosecha`) VALUES ('10', 'Remolacha', '10', 'MARZO, ABRIL, MAYO, JUNIO, AGOSTO, SETIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE', '130');
